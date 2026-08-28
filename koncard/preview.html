@@ -1,0 +1,303 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KONCARD preview</title>
+<style>
+:root{--green:#123f2e;--green2:#1c6b4a;--mint:#e9f2ec;--cream:#f6f8f5;--ink:#10261d;--muted:#68756e;--line:#e1e8e3;--white:#fff;--gold:#d7b35d}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:var(--cream);line-height:1.55}a{color:inherit;cursor:pointer}.container{max-width:1180px;margin:auto;padding:0 24px}.nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}.navin{height:74px;display:flex;align-items:center;justify-content:space-between}.logo{font-weight:950;font-size:26px;letter-spacing:-1.4px;text-decoration:none}.logo small{display:block;font-size:10px;letter-spacing:0;color:var(--muted);margin-top:-5px}.navlinks{display:flex;gap:25px;align-items:center;font-size:14px;color:#56645d}.navlinks a{text-decoration:none}.navcta{background:var(--green);color:#fff!important;padding:10px 14px;border-radius:10px;font-weight:800;text-decoration:none}
+.notice-bar{background:#123f2e;color:#fff;font-size:12px;text-align:center;padding:6px 10px}
+.hero{padding:70px 0 60px;background:linear-gradient(180deg,#fff 0,#f6f8f5 100%)}.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:50px;align-items:center}.eyebrow{display:inline-block;border:1px solid #d6e1db;border-radius:999px;padding:8px 13px;font-size:12px;color:#496156;background:#fff}.hero h1{font-size:60px;line-height:.98;letter-spacing:-3px;margin:22px 0 18px}.hero h1 span{color:var(--green2)}.lead{font-size:18px;color:#617069;max-width:620px}.btn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;border-radius:12px;padding:15px 20px;font-weight:850;margin-top:24px;border:none;font:inherit;cursor:pointer}.btn.primary{background:var(--green);color:#fff}.btn.secondary{background:#fff;border:1px solid var(--line)}.mini{margin-top:14px;color:#7b8781;font-size:12px}
+.mock-card{background:linear-gradient(145deg,#163f31,#0c2d21);border-radius:24px;padding:28px;color:#fff;min-height:280px;box-shadow:0 28px 60px rgba(18,63,46,.2);position:relative;overflow:hidden}.mock-card:after{content:"";position:absolute;width:220px;height:220px;border:1px solid rgba(255,255,255,.13);border-radius:50%;right:-70px;bottom:-80px}.chip{width:52px;height:38px;border-radius:9px;background:linear-gradient(135deg,#ebd38a,#b99a50);margin:4px 0 44px}.mock-card .bank{font-weight:850;font-size:15px}.mock-card .cardname{font-size:21px;margin-top:6px}.mock-card .digits{letter-spacing:4px;margin-top:36px;font-size:14px}
+.section{padding:56px 0}.section h2{text-align:center;font-size:34px;letter-spacing:-1.3px;margin:0 0 10px}.center{text-align:center;color:var(--muted);max-width:680px;margin:0 auto 30px}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.panel{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 10px 30px rgba(18,63,46,.04)}.num{width:36px;height:36px;border-radius:11px;background:var(--mint);color:var(--green2);display:flex;align-items:center;justify-content:center;font-weight:900}.panel h3{margin:16px 0 6px}.panel p{margin:0;color:var(--muted)}.dark{background:var(--green);color:#fff}.dark h2{color:#fff}.dark .center{color:#c9d8d0}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.stat strong{display:block;font-size:34px}
+.quizwrap{max-width:760px;margin:20px auto}.progress{height:8px;background:#dfe8e2;border-radius:99px;overflow:hidden}.progress>div{height:100%;background:var(--green2);transition:width .25s}.question{margin-top:26px}.qnum{font-size:13px;color:var(--muted)}.question h1{font-size:36px;line-height:1.1;letter-spacing:-1.3px}.options{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:22px}.option{padding:16px;border:1px solid var(--line);background:#fff;border-radius:14px;text-align:left;cursor:pointer;font:inherit}.option:hover,.option.selected{border-color:var(--green2);background:var(--mint)}.quiznav{display:flex;justify-content:space-between;margin-top:24px}
+.result-hero{padding:40px 0 20px}.resultgrid{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;align-items:start}.scorecard{background:var(--green);color:#fff;border-radius:22px;padding:28px}.score{font-size:56px;font-weight:950;line-height:1}.bar{height:10px;background:rgba(255,255,255,.17);border-radius:99px;overflow:hidden;margin:16px 0}.bar>div{height:100%;background:#d7b35d}
+.cardlist{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.carditem{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px}.carditem h3{margin:8px 0 4px;font-size:18px}.muted{color:var(--muted)}.tag{display:inline-block;padding:6px 9px;background:var(--mint);color:#456155;border-radius:999px;font-size:11px;margin:3px 3px 3px 0}.cardtop{display:flex;justify-content:space-between;gap:14px}.verify{font-size:11px;padding:6px 8px;border-radius:999px;background:#edf7ef;color:#2e704a;white-space:nowrap}
+.details{display:grid;grid-template-columns:1fr .7fr;gap:22px}.detailbox{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px}.featurelist{padding-left:18px}
+.formrow{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.select,.search{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:10px;background:#fff;font:inherit}
+.notice{background:#fff7df;border:1px solid #f0dfad;border-radius:14px;padding:14px 16px;color:#6f5c2d;font-size:13px}.empty{padding:30px;text-align:center;color:var(--muted)}
+.footer{padding:26px 0;border-top:1px solid var(--line);background:#fff;color:var(--muted);font-size:12px}.footerin{display:flex;justify-content:space-between;gap:20px}
+.screen{display:none}.screen.active{display:block}
+@media(max-width:900px){.hero-grid,.resultgrid,.details{grid-template-columns:1fr}.hero h1{font-size:46px}.steps,.stats{grid-template-columns:1fr}.cardlist{grid-template-columns:1fr}.navlinks{display:none}.formrow{grid-template-columns:1fr}}
+@media(max-width:560px){.hero h1{font-size:36px;letter-spacing:-2px}.section h2{font-size:26px}.options{grid-template-columns:1fr}.footerin{display:block}}
+</style>
+</head>
+<body>
+
+<div class="notice-bar">Live preview — simulated in one page. The real site is separate HTML pages (index / quiz / result / cards / card).</div>
+
+<header class="nav"><div class="container navin">
+  <a class="logo" onclick="show('home')">KONCARD<small>কোন কার্ড?</small></a>
+  <nav class="navlinks">
+    <a onclick="show('cards')">Cards</a>
+    <a onclick="show('methodology')">Methodology</a>
+  </nav>
+  <a class="navcta" onclick="startQuiz()">Start quiz</a>
+</div></header>
+
+<!-- HOME -->
+<main id="screen-home" class="screen active">
+<section class="hero"><div class="container hero-grid">
+  <div>
+    <span class="eyebrow">Bangladesh • Free • Independent matching</span>
+    <h1>Which card is <span>right for you?</span></h1>
+    <p class="lead">Answer a few simple questions and KONCARD matches you with a Bangladesh credit card based on your spending style and priorities.</p>
+    <button class="btn primary" onclick="startQuiz()">Find My Card →</button>
+    <div class="mini">About 60 seconds • No NID, PIN or bank login required</div>
+  </div>
+  <div class="mock-card"><div class="chip"></div><div class="bank">KONCARD</div><div class="cardname">Your next card, matched.</div><div class="digits">NOT A REAL CARD · CONCEPT</div></div>
+</div></section>
+
+<section class="section"><div class="container">
+  <h2>How KONCARD works</h2>
+  <p class="center">Simple questions. Clear recommendation. Official sources where available.</p>
+  <div class="steps">
+    <div class="panel"><div class="num">1</div><h3>Tell us about you</h3><p>Choose your spending focus and the benefits you care about.</p></div>
+    <div class="panel"><div class="num">2</div><h3>We score the cards</h3><p>KONCARD ranks the cards in the database against the preferences you provide.</p></div>
+    <div class="panel"><div class="num">3</div><h3>Get your match</h3><p>See the strongest match, why it matched, and the official source link.</p></div>
+  </div>
+</div></section>
+
+<section class="section dark"><div class="container">
+  <h2>Built for clarity</h2>
+  <p class="center">We are building KONCARD around transparent recommendations rather than a giant comparison table.</p>
+  <div class="stats">
+    <div class="panel dark"><strong>4</strong><span>questions in the current quiz</span></div>
+    <div class="panel dark"><strong>6</strong><span>launch cards with official product-page sources</span></div>
+    <div class="panel dark"><strong>0</strong><span>bank logins or NID numbers requested</span></div>
+  </div>
+</div></section>
+
+<section class="section"><div class="container">
+  <div class="panel"><h2 style="text-align:left">Important</h2>
+  <p class="muted">KONCARD provides informational matching, not credit approval or financial advice. Fees, eligibility and promotions can change. Always confirm the current terms directly with the issuing bank before applying.</p>
+  <p><a onclick="show('methodology')" style="text-decoration:underline">Read our methodology →</a></p></div>
+</div></section>
+</main>
+
+<!-- QUIZ -->
+<main id="screen-quiz" class="screen">
+<div class="section"><div class="container quizwrap">
+  <div class="progress"><div id="progress" style="width:0%"></div></div>
+  <div class="question"><div class="qnum" id="qcount"></div><h1 id="qtitle">Loading…</h1><div class="options" id="options"></div></div>
+  <div class="quiznav"><button class="btn secondary" id="prevBtn">Back</button><button class="btn primary" id="nextBtn">Next</button></div>
+</div></div>
+</main>
+
+<!-- RESULT -->
+<main id="screen-result" class="screen">
+<section class="result-hero"><div class="container">
+  <span class="eyebrow">Your KONCARD Match</span>
+  <h1 style="font-size:44px;letter-spacing:-2px;margin:16px 0 8px" id="best-name">—</h1>
+  <p class="muted" id="best-bank"></p>
+  <div class="resultgrid" style="margin-top:24px">
+    <div class="scorecard">
+      <div style="font-size:13px;color:#c9d8d0">Match score</div>
+      <div class="score" id="score">—</div>
+      <div class="bar"><div id="scorebar" style="width:0%"></div></div>
+      <p id="best-reason" style="color:#d5e2db"></p>
+      <a id="official" class="btn secondary" href="#" target="_blank" rel="noopener">View official source</a>
+    </div>
+    <div class="detailbox">
+      <h3>Why this card?</h3>
+      <ul class="featurelist" id="best-features"></ul>
+      <div class="notice">Final approval, fees and eligibility are determined by the issuing bank. Check the current official terms before applying.</div>
+    </div>
+  </div>
+</div></section>
+<section class="section"><div class="container">
+  <h2>Your next-best matches</h2>
+  <p class="center">These are alternatives from the current KONCARD launch dataset.</p>
+  <div class="cardlist" id="others"></div>
+  <p style="text-align:center;margin-top:20px"><button class="btn secondary" onclick="startQuiz()">Retake quiz</button></p>
+</div></section>
+</main>
+
+<!-- CARDS DIRECTORY -->
+<main id="screen-cards" class="screen">
+<div class="section"><div class="container">
+  <span class="eyebrow">Current launch dataset</span>
+  <h1 style="font-size:44px;letter-spacing:-2px">Browse cards</h1>
+  <p class="muted">The initial dataset is intentionally small while we build a verification workflow.</p>
+  <div class="formrow" style="margin:22px 0">
+    <input id="search" class="search" placeholder="Search card or benefit…">
+    <select id="bankFilter" class="select"><option value="">All banks</option></select>
+  </div>
+  <div class="cardlist" id="cards-grid"></div>
+</div></div>
+</main>
+
+<!-- CARD DETAIL -->
+<main id="screen-detail" class="screen">
+<div class="section"><div class="container">
+  <span class="eyebrow" id="d-verified">—</span>
+  <h1 id="d-name" style="font-size:44px;letter-spacing:-2px">—</h1>
+  <p class="muted" id="d-bank"></p>
+  <div class="details" style="margin-top:24px">
+    <div class="detailbox">
+      <h2 style="text-align:left;font-size:24px">Key features</h2>
+      <ul class="featurelist" id="d-features"></ul>
+      <div class="notice">This page shows information from the official product source identified below. Check the bank for current fees and eligibility.</div>
+    </div>
+    <div class="detailbox">
+      <h3>Verification</h3>
+      <p id="d-date" class="muted"></p>
+      <p><a id="d-source" class="btn secondary" target="_blank" rel="noopener" href="#">Open official source →</a></p>
+      <p><a id="d-apply" class="btn primary" target="_blank" rel="noopener" href="#">Go to bank →</a></p>
+      <p><button class="btn secondary" onclick="show('cards')">← Back to all cards</button></p>
+    </div>
+  </div>
+</div></div>
+</main>
+
+<!-- METHODOLOGY -->
+<main id="screen-methodology" class="screen">
+<div class="section"><div class="container" style="max-width:850px">
+  <span class="eyebrow">KONCARD</span>
+  <h1 style="font-size:44px;letter-spacing:-2px">Methodology</h1>
+  <p class="muted">KONCARD's first version is a preference-matching tool. It does not claim to predict approval.</p>
+  <h2 style="text-align:left;font-size:24px">How the score works</h2>
+  <p>We map your answers to editorial preference weights, then score each card in the current dataset. The score is a product recommendation indicator, not an official bank score.</p>
+  <h2 style="text-align:left;font-size:24px">Why there's no income question</h2>
+  <p>An earlier build asked about monthly income but never used the answer, and no card had income data to match against. That question was removed rather than left in as decoration. It returns once income eligibility is confirmed per card and the scoring logic actually uses it.</p>
+  <h2 style="text-align:left;font-size:24px">Verification</h2>
+  <p>Each launch card has a verification flag and date. When a fee, eligibility rule or promotion has not been checked, KONCARD leaves it blank rather than guess.</p>
+</div></div>
+</main>
+
+<footer class="footer"><div class="container footerin">
+  <div>© 2026 KONCARD • কোন কার্ড?</div>
+  <div><a onclick="show('methodology')">Methodology</a></div>
+</div></footer>
+
+<script>
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+
+const CARDS = [
+  {"id":"brac-visa-cashback","bank":"BRAC Bank PLC","name":"BRAC Bank Visa Cashback Credit Card","network":"Visa","annual_fee":null,"interest_rate":null,"income_min":null,"verified":true,"verified_date":"2026-08-25","official_source":"https://www.bracbank.com/en/product/visa-cashback-credit-card-1770109861","application_url":"https://www.bracbank.com/en/product/visa-cashback-credit-card-1770109861","features":["1% monthly cashback on eligible retail POS, QR and e-commerce spend for the first 3 months, capped at BDT 300/month","Welcome vouchers from Artisan, Chaldal, Gadget & Gear and Pickaboo","200 bonus reward points for first-time primary card activation through Astha"],"tags":["cashback","shopping","online","everyday"]},
+  {"id":"brac-visa-tara-platinum","bank":"BRAC Bank PLC","name":"BRAC Bank Visa TARA Platinum Credit Card","network":"Visa","annual_fee":null,"interest_rate":null,"income_min":null,"verified":true,"verified_date":"2026-08-25","official_source":"https://www.bracbank.com/en/retail/card/tara-platinum-credit-card","application_url":"https://www.bracbank.com/en/retail/card/tara-platinum-credit-card","features":["BDT 1,000 cashback after spending BDT 50,000 within the first 3 months of availing the card","Exclusive discount vouchers","Credit Shield Insurance information is provided on the official product page"],"tags":["lifestyle","women","shopping","cashback"]},
+  {"id":"ebl-visa-classic","bank":"Eastern Bank PLC","name":"EBL Visa Classic Credit Card","network":"Visa","annual_fee":null,"interest_rate":null,"income_min":null,"verified":true,"verified_date":"2026-08-25","official_source":"https://www.ebl.com.bd/retail/eblcard/EBL-Visa-Classic-Credit-Card","application_url":"https://www.ebl.com.bd/retail/eblcard/EBL-Visa-Classic-Credit-Card","features":["Renewal fee can be waived with 24 transactions in a year","Up to 45 days maximum interest-free period","First supplementary card free per client","Discounts at partner merchants and installment facilities"],"tags":["everyday","shopping","installment","value"]},
+  {"id":"ebl-visa-gold","bank":"Eastern Bank PLC","name":"EBL Visa Gold Credit Card","network":"Visa","annual_fee":null,"interest_rate":null,"income_min":null,"verified":true,"verified_date":"2026-08-25","official_source":"https://ebl.com.bd/retail/eblcard/EBL-VISA-Gold-Credit-Card","application_url":"https://ebl.com.bd/retail/eblcard/EBL-VISA-Gold-Credit-Card","features":["Renewal fee can be waived with 24 transactions in a year","Up to 45 days maximum interest-free period","First supplementary card free per client","ZIP installment facility at partner outlets"],"tags":["everyday","shopping","installment","value"]},
+  {"id":"ebl-visa-platinum","bank":"Eastern Bank PLC","name":"EBL Visa Platinum Credit Card","network":"Visa","annual_fee":null,"interest_rate":null,"income_min":null,"verified":true,"verified_date":"2026-08-25","official_source":"https://ebl.com.bd/retail/eblcard/EBL-VISA-Platinum-Credit-Card","application_url":"https://ebl.com.bd/retail/eblcard/EBL-VISA-Platinum-Credit-Card","features":["Up to 6 complimentary SKYLOUNGE accesses per year","Priority Pass airport lounge program","Up to 45 days maximum interest-free period","First two supplementary cards free per client","SKYCOINS rewards program"],"tags":["travel","lounge","premium","rewards","international"]},
+  {"id":"ebl-stellar-platinum","bank":"Eastern Bank PLC","name":"EBL Stellar Platinum Credit Card","network":"Visa / ShareTrip","annual_fee":null,"interest_rate":null,"income_min":null,"verified":true,"verified_date":"2026-08-25","official_source":"https://ebl.com.bd/retail/eblcard/ebl-stellar-platinum-credit-card","application_url":"https://ebl.com.bd/retail/eblcard/ebl-stellar-platinum-credit-card","features":["Up to 15% discount on base fare for selected airlines","International and domestic flight savings with stated caps and frequencies","Extra 4% discount on base fare for tickets purchased abroad with USD payments","Up to 45 days maximum interest-free period","ZIP zero-percent installment program at partner outlets"],"tags":["travel","international","premium","shopping"]}
+];
+
+function show(name){
+  $$('.screen').forEach(s=>s.classList.remove('active'));
+  $('#screen-'+name).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// ---- QUIZ ----
+const questions=[
+ {key:"spend",title:"Where do you spend most?",options:[
+  ["shopping","Online shopping"],["dining","Restaurants & dining"],["travel","Travel & flights"],["everyday","Everyday spending"]]},
+ {key:"benefit",title:"What matters most to you?",options:[
+  ["cashback","Cashback / savings"],["rewards","Rewards"],["lounge","Airport lounges"],["installment","Installments"]]},
+ {key:"international",title:"Do you need international transactions?",options:[
+  ["yes","Yes"],["no","No"]]},
+ {key:"lounge",title:"How important is airport lounge access?",options:[
+  ["high","Very important"],["medium","Nice to have"],["low","Not important"]]}
+];
+const state={answers:{},index:0,results:[]};
+
+function startQuiz(){ state.answers={}; state.index=0; show('quiz'); renderQuestion(); }
+function renderQuestion(){
+ const q=questions[state.index];
+ $("#qcount").textContent=`Question ${state.index+1} of ${questions.length}`;
+ $("#qtitle").textContent=q.title;
+ $("#options").innerHTML=q.options.map(([v,l])=>`<button class="option ${state.answers[q.key]===v?"selected":""}" data-value="${v}">${l}</button>`).join("");
+ $$("#options .option").forEach(b=>b.onclick=()=>{state.answers[q.key]=b.dataset.value;$$("#options .option").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");});
+ $("#prevBtn").style.visibility=state.index===0?"hidden":"visible";
+ $("#nextBtn").textContent=state.index===questions.length-1?"See my match":"Next";
+ $("#progress").style.width=((state.index+1)/questions.length*100)+"%";
+}
+function scoreCard(c,a){
+ let s=0,total=0;
+ const add=(x,w)=>{s+=x*w;total+=w};
+ const tags=c.tags||[];
+ if(a.spend==="shopping"){add(tags.includes("shopping")?10:3,2)}
+ if(a.spend==="dining"){add(tags.includes("lifestyle")||tags.includes("dining")?10:4,2)}
+ if(a.spend==="travel"){add(tags.includes("travel")?10:4,2)}
+ if(a.spend==="everyday"){add(tags.includes("everyday")?10:6,2)}
+ if(a.benefit==="cashback"){add(tags.includes("cashback")?10:4,2)}
+ if(a.benefit==="rewards"){add(tags.includes("rewards")?10:4,2)}
+ if(a.benefit==="lounge"){add(tags.includes("lounge")?10:2,2)}
+ if(a.benefit==="installment"){add(tags.includes("installment")?10:5,2)}
+ if(a.international==="yes"){add(tags.includes("international")||tags.includes("travel")?10:4,1)}
+ if(a.lounge==="high"){add(tags.includes("lounge")?10:2,1)}
+ if(a.lounge==="low"){add(tags.includes("lounge")?4:8,1)}
+ return total?Math.round((s/total)*100):50;
+}
+function buildReason(c,a){
+ const reasons=[];
+ if(a.spend && c.tags?.includes(a.spend)) reasons.push("matches your spending focus");
+ if(a.benefit && c.tags?.includes(a.benefit)) reasons.push("fits your preferred benefit");
+ if(a.international==="yes" && c.tags?.includes("international")) reasons.push("supports your international needs");
+ if(a.lounge==="high" && c.tags?.includes("lounge")) reasons.push("has lounge-related benefits");
+ return reasons.length?"It "+reasons.join(", ")+".":"It scored highest against the preferences you gave us.";
+}
+function saveResult(){
+ const scored=CARDS.map(c=>({...c,score:scoreCard(c,state.answers)})).sort((a,b)=>b.score-a.score);
+ state.results=scored;
+ renderResult();
+ show('result');
+}
+$("#nextBtn").addEventListener("click",()=>{
+ if(!state.answers[questions[state.index].key]) return;
+ if(state.index<questions.length-1){state.index++;renderQuestion();} else saveResult();
+});
+$("#prevBtn").addEventListener("click",()=>{if(state.index>0){state.index--;renderQuestion();}});
+
+// ---- RESULT ----
+function cardHtml(c){
+ return `<article class="carditem">
+   <div class="cardtop"><div><div class="muted" style="font-size:12px">${c.bank} · ${c.network}</div><h3>${c.name}</h3></div>${c.verified?'<span class="verify">✓ Official source</span>':'<span class="verify" style="background:#fff1f1;color:#9b4444">Verification pending</span>'}</div>
+   <div style="margin:10px 0">${(c.tags||[]).slice(0,4).map(t=>`<span class="tag">${t}</span>`).join("")}</div>
+   <p class="muted">${(c.features||[])[0]||"Details will be added after verification."}</p>
+   <a class="btn secondary" onclick="viewCard('${c.id}')">View card →</a>
+ </article>`;
+}
+function renderResult(){
+ const cards=state.results;
+ const best=cards[0];
+ $("#score").textContent=best.score+"%";
+ $("#scorebar").style.width=Math.min(best.score,100)+"%";
+ $("#best-name").textContent=best.name;
+ $("#best-bank").textContent=best.bank+" · "+best.network;
+ $("#best-reason").textContent=buildReason(best,state.answers);
+ $("#best-features").innerHTML=best.features.map(x=>`<li>${x}</li>`).join("");
+ $("#official").href=best.official_source;
+ $("#others").innerHTML=cards.slice(1,5).map(cardHtml).join("");
+}
+
+// ---- CARDS DIRECTORY ----
+function initCardsPage(){
+ const grid=$("#cards-grid");
+ [...new Set(CARDS.map(c=>c.bank))].forEach(b=>{const o=document.createElement("option");o.value=b;o.textContent=b;$("#bankFilter").appendChild(o)});
+ function draw(){
+  const q=($("#search").value||"").toLowerCase(),b=$("#bankFilter").value;
+  const list=CARDS.filter(c=>(!q || `${c.name} ${c.bank} ${(c.tags||[]).join(" ")}`.toLowerCase().includes(q))&&(!b||c.bank===b));
+  grid.innerHTML=list.length?list.map(cardHtml).join(""):'<div class="empty">No cards match your filters.</div>';
+ }
+ $("#search").oninput=draw; $("#bankFilter").onchange=draw; draw();
+}
+
+// ---- CARD DETAIL ----
+function viewCard(id){
+ const c=CARDS.find(x=>x.id===id);
+ if(!c) return;
+ $("#d-name").textContent=c.name;$("#d-bank").textContent=c.bank+" · "+c.network;
+ $("#d-verified").innerHTML=c.verified?"✓ Official source checked":"Verification pending";
+ $("#d-features").innerHTML=c.features.map(x=>`<li>${x}</li>`).join("");
+ $("#d-source").href=c.official_source;$("#d-apply").href=c.application_url;
+ $("#d-date").textContent=c.verified_date?`Last verified: ${c.verified_date}`:"Verification date not available";
+ show('detail');
+}
+
+initCardsPage();
+</script>
+</body>
+</html>
