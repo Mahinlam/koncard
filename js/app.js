@@ -1,16 +1,17 @@
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 
+function esc(s){
+  return String(s).replace(/[&<>"']/g, c => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+  }[c]));
+}
+
 async function loadCards(){
   const res=await fetch("data/cards.json");
   return await res.json();
 }
 
-// NOTE: an "income" question was removed from this list. Every card's
-// income_min is currently null (not yet verified against any bank), so a
-// question with no matching data behind it was asked and then silently
-// ignored by scoreCard(). Re-add it once income_min is populated and wired
-// into scoreCard() for real - see methodology.html.
 const questions=[
  {key:"spend",title:"Where do you spend most?",options:[
   ["shopping","Online shopping"],["dining","Restaurants & dining"],["travel","Travel & flights"],["everyday","Everyday spending"]]},
@@ -71,9 +72,9 @@ initQuiz();
 
 function cardHtml(c){
  return `<article class="carditem">
-   <div class="cardtop"><div><div class="muted" style="font-size:12px">${c.bank} · ${c.network}</div><h3>${c.name}</h3></div>${c.verified?'<span class="verify">✓ Official source</span>':'<span class="verify" style="background:#fff1f1;color:#9b4444">Verification pending</span>'}</div>
-   <div style="margin:10px 0">${(c.tags||[]).slice(0,4).map(t=>`<span class="tag">${t}</span>`).join("")}</div>
-   <p class="muted">${(c.features||[])[0]||"Details will be added after verification."}</p>
+   <div class="cardtop"><div><div class="muted" style="font-size:12px">${esc(c.bank)} · ${esc(c.network)}</div><h3>${esc(c.name)}</h3></div>${c.verified?'<span class="verify">✓ Official source</span>':'<span class="verify" style="background:#fff1f1;color:#9b4444">Verification pending</span>'}</div>
+   <div style="margin:10px 0">${(c.tags||[]).slice(0,4).map(t=>`<span class="tag">${esc(t)}</span>`).join("")}</div>
+   <p class="muted">${esc((c.features||[])[0]||"Details will be added after verification.")}</p>
    <a class="btn secondary" href="card.html?id=${encodeURIComponent(c.id)}">View card →</a>
  </article>`;
 }
@@ -102,7 +103,7 @@ async function initResult(){
  $("#best-name").textContent=best.name;
  $("#best-bank").textContent=best.bank+" · "+best.network;
  $("#best-reason").textContent=buildReason(best,answers);
- $("#best-features").innerHTML=best.features.map(x=>`<li>${x}</li>`).join("");
+ $("#best-features").innerHTML=best.features.map(x=>`<li>${esc(x)}</li>`).join("");
  $("#official").href=best.official_source;
  $("#others").innerHTML=cards.slice(1,5).map(cardHtml).join("");
 }
@@ -122,7 +123,7 @@ async function initCardDetail(){
  if(!c){el.innerHTML='<div class="empty">Card not found.</div>';return}
  $("#d-name").textContent=c.name;$("#d-bank").textContent=c.bank+" · "+c.network;
  $("#d-verified").innerHTML=c.verified?"✓ Official source checked":"Verification pending";
- $("#d-features").innerHTML=c.features.map(x=>`<li>${x}</li>`).join("");
+ $("#d-features").innerHTML=c.features.map(x=>`<li>${esc(x)}</li>`).join("");
  $("#d-source").href=c.official_source;$("#d-apply").href=c.application_url;
  $("#d-date").textContent=c.verified_date?`Last verified: ${c.verified_date}`:"Verification date not available";
 }
